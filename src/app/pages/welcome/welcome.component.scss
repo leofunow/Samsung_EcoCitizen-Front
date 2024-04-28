@@ -1,0 +1,55 @@
+.map {
+  height: 100%;
+  width: 100%;
+}
+.map-info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-height: 100%;
+  height: fit-content;
+  padding: 12px;
+  width: 350px;
+}
+.map-info__card {
+  height: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  overflow-y: scroll;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.map-info__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.map-info__timestamp {
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+}
+
+.good {
+ color: green;
+}
+
+.bad {
+  color: red;
+}
+
+.warning {
+  color: orange;
+}
+
+.map-info__additional_info {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 24px;
+}

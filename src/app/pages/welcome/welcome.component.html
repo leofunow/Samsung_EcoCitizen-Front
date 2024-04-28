@@ -1,0 +1,48 @@
+<div nz-flex [nzVertical]="true" style="height: 100%;">
+    <div nz-row style="margin-bottom: 12px;">
+        <div nz-col>
+            <nz-select style="width: 200px;" nzPlaceHolder="Выберите показатели" [(ngModel)]="currentFilter" (ngModelChange)="changeFilter($event)">
+                <nz-option *ngFor="let option of sensor_options" [nzValue]="option" [nzLabel]="option"></nz-option>
+            </nz-select>
+        </div>
+    </div>
+    <div nz-row style="height: 100%; position: relative; flex-grow: 1;">
+        <div nz-col class="map">
+            <ya-map [state]="mapsState" [center]="[55.8,37]" [zoom]="8">
+                <!-- <ya-map [state]="mapsState" [center]="myPos" [zoom]="12" > -->
+                <ya-placemark [geometry]="myPos"
+                    [options]="{preset: 'islands#circleIcon', iconColor: '#00e000'}"></ya-placemark>
+                <ya-geoobject *ngFor="let mark of !currentHouseInfo? placemarks:placemarks_history"
+                    [feature]="{geometry:{type: 'Circle', coordinates: [mark.location.latitude, mark.location.longitude], radius: 100, iconColor: '#00e000'}, properties: getPlacemarkProperties(mark)}"
+                    [options]="{preset: 'islands#blackStretchyIcon',fillOpacity: 0.05, strokeColor: '#00e000', fillColor: '#00e000'}"
+                    (yaclick)="onPlacemarkClick(mark)"></ya-geoobject>
+                <ya-geoobject *ngFor="let mark of !currentHouseInfo? placemarks:placemarks_history"
+                    [feature]="{geometry:{type: 'Point', coordinates: [mark.location.latitude, mark.location.longitude], radius: 100, iconColor: '#00e000'}, properties: getPlacemarkProperties(mark)}"
+                    (yaclick)="onPlacemarkClick(mark)"></ya-geoobject>
+            </ya-map>
+        </div>
+        <div nz-col class="map-info" *ngIf="currentHouseInfo">
+            <div class="map-info__card">
+                <h2>Информация об объекте
+                    <p class="map-info__timestamp">{{currentHouseInfo?.telemetry_timestamp?.toLocaleString("ru-RU")}}</p>
+                </h2>
+                <p *ngFor="let sensor_data of currentHouseInfo?.sensordatavalues">
+                    <b>{{sensor_data.value_type}}: <span class="good">{{sensor_data.value}}</span></b>
+                </p>
+                <p>
+                    {{history_to_dict()}}
+                </p>
+    
+                <p>
+                    <canvas baseChart [data]="lineChartData" [type]="'line'"></canvas>
+                </p>
+                <p class="map-info__additional_info">
+                    <b>Название устройства</b>: {{currentHouseInfo?.device_name}} <br>
+                    <b>Модель сенсора</b>: {{currentHouseInfo?.sensor_model}}
+                </p>
+                <span nz-icon nzType="close" class="map-info__close" nzTheme="outline"
+                    (click)="currentHouseInfo = undefined"></span>
+            </div>
+        </div>
+    </div>
+</div>

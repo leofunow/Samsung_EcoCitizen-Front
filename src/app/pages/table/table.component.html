@@ -1,0 +1,28 @@
+<nz-table #basicTable [nzData]="tableData">
+    <thead>
+      <tr>
+        <th>Название устройства</th>
+        <th>Модель устройства</th>
+        <th>Датчики</th>
+        <th>Последняя активность</th>
+        <th>Статус</th>
+        <!-- <th>Action</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.device_name}}</td>
+        <td>{{data.sensor_model}}</td>
+        <td> <nz-tag *ngFor="let tag of data.sensordatavalues" nzColor="blue"> {{tag.value_type}} </nz-tag> </td>
+        <td>{{data.telemetry_timestamp?.toLocaleString("ru-RU")}}</td>
+        <td><nz-tag nzColor="green">активный</nz-tag></td>
+        <!-- <td>{{data.age}}</td>
+        <td>{{data.address}}</td> -->
+        <!-- <td>
+          <a>Action 一 {{data.name}}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td> -->
+      </tr>
+    </tbody>
+  </nz-table>
